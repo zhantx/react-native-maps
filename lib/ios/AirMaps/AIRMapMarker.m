@@ -34,7 +34,7 @@
     // height though, we need to compensate in such a way that the bottom of the marker stays at the same spot on the
     // map.
     CGFloat dy = (bounds.size.height - self.bounds.size.height) / 2;
-    CGPoint center = (CGPoint){ self.center.x, self.center.y - dy };
+    CGPoint center = (CGPoint){ self.center.x - 100, self.center.y - dy };
 
     // Avoid crashes due to nan coords
     if (isnan(center.x) || isnan(center.y) ||
@@ -187,23 +187,23 @@
 - (void)_handleTap:(UITapGestureRecognizer *)recognizer {
     AIRMapMarker *marker = self;
     if (!marker) return;
-    
+
     if (marker.selected) {
         CGPoint touchPoint = [recognizer locationInView:marker.map.calloutView];
         if ([marker.map.calloutView hitTest:touchPoint withEvent:nil]) {
-            
+
             // the callout got clicked, not the marker
             id event = @{
                          @"action": @"callout-press",
                          };
-            
+
             if (marker.onCalloutPress) marker.onCalloutPress(event);
             if (marker.calloutView && marker.calloutView.onPress) marker.calloutView.onPress(event);
             if (marker.map.onCalloutPress) marker.map.onCalloutPress(event);
             return;
         }
     }
-    
+
     // the actual marker got clicked
     id event = @{
                  @"action": @"marker-press",
@@ -213,10 +213,10 @@
                          @"longitude": @(marker.coordinate.longitude)
                          }
                  };
-    
+
     if (marker.onPress) marker.onPress(event);
     if (marker.map.onMarkerPress) marker.map.onMarkerPress(event);
-    
+
     [marker.map selectAnnotation:marker animated:NO];
 }
 
