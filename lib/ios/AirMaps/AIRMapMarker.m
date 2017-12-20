@@ -34,7 +34,7 @@
     // height though, we need to compensate in such a way that the bottom of the marker stays at the same spot on the
     // map.
     CGFloat dy = (bounds.size.height - self.bounds.size.height) / 2;
-    CGPoint center = (CGPoint){ self.center.x, self.center.y - dy };
+    CGPoint center = (CGPoint){ self.center.x - 100, self.center.y - dy };
 
     // Avoid crashes due to nan coords
     if (isnan(center.x) || isnan(center.y) ||
